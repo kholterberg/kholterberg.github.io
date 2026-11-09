@@ -4,7 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kalle Holterberg</title>
-<meta name="description" content="Datavetenskapsstudent på Karlstad Universitet.">
+<meta name="description" content="Datavetenskapsstudent på Karlstads universitet med inriktning mot säkerhet och infrastruktur.">
+
+<link rel="canonical" href="https://kholterberg.dev/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kholterberg.dev/">
+<meta property="og:title" content="Kalle Holterberg">
+<meta property="og:description" content="Datavetenskapsstudent på Karlstads universitet med inriktning mot säkerhet och infrastruktur.">
+<meta property="og:image" content="https://kholterberg.dev/img/kokbok.png">
+<meta property="og:locale" content="sv_SE">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kalle Holterberg">
+<meta name="twitter:description" content="Datavetenskapsstudent på Karlstads universitet med inriktning mot säkerhet och infrastruktur.">
+<meta name="twitter:image" content="https://kholterberg.dev/img/kokbok.png">
+
 <style>
   :root {
     --bg: #0f1012;
@@ -137,6 +152,48 @@
     color: var(--muted);
   }
 
+  /* ---------- Shots ---------- */
+
+  .shots {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 0 0 18px;
+  }
+
+  .shots a {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    overflow: hidden;
+    line-height: 0;
+    transition: border-color 0.18s ease;
+  }
+
+  .shots a:hover { border-color: var(--accent-dim); }
+
+  .shots img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  .shots figcaption {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    line-height: 1.5;
+    padding: 7px 10px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .shots figure { margin: 0; }
+
+  /* ---------- Links ---------- */
+
   .links {
     display: flex;
     flex-wrap: wrap;
@@ -184,6 +241,8 @@
     header { padding: 64px 0 40px; }
     section { padding: 40px 0; }
     .project { padding: 20px; }
+    .shots { grid-template-columns: 1fr; }
+    .shots img { height: 190px; }
   }
 </style>
 </head>
@@ -195,7 +254,7 @@
     <h1>Kalle Holterberg</h1>
     <p class="tagline">Datavetenskap · Karlstads universitet</p>
     <p class="intro">
-      Tredje året inom Datavetenskapsprogrammet, med intresse för
+      Tredje året på datavetenskapsprogrammet, med intresse för
       <strong>säkerhet och infrastruktur</strong>. Det mesta jag kan har jag
       lärt mig genom att bygga saker och sedan felsöka dem — ofta i min
       hemmaserver, som numera kör det jag skriver.
@@ -208,12 +267,29 @@
     <article class="project">
       <h3>RecipeHub</h3>
       <p class="stack">Node.js · Express · SQLite · Docker</p>
+
+      <div class="shots">
+        <figure>
+          <a href="img/kokbok.png">
+            <img src="img/kokbok.png" alt="Kokboksvyn i RecipeHub med sparade recept som kort">
+          </a>
+          <figcaption>Kokbok</figcaption>
+        </figure>
+        <figure>
+          <a href="img/inkopslista.png">
+            <img src="img/inkopslista.png" alt="Inköpslista grupperad efter varukategori">
+          </a>
+          <figcaption>Inköpslista</figcaption>
+        </figure>
+      </div>
+
       <p>
         Receptscraper och digital kokbok som bygger inköpslistor sorterade
         efter butikens gångordning. Sajtspecifika scrapers för ICA och Coop
         plus en generell JSON-LD-parser, som alla normaliserar till samma
         datastruktur. Körs i min homelab bakom reverse proxy.
       </p>
+
       <div class="links">
         <a href="https://github.com/kholterberg/Kokbok">GitHub</a>
       </div>
@@ -236,7 +312,7 @@
 
   <footer>
     <a href="https://github.com/kholterberg">github.com/kholterberg</a>
-    <a href="#">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/karl-johan-holterberg-264730251/">LinkedIn</a>
     <a href="mailto:holterbergk@gmail.com">holterbergk@gmail.com</a>
   </footer>
 
