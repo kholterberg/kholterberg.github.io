@@ -57,6 +57,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  body.no-scroll { overflow: hidden; }
+
   .wrap {
     max-width: 680px;
     margin: 0 auto;
@@ -161,16 +163,27 @@
     margin: 0 0 18px;
   }
 
-  .shots a {
+  .shots figure { margin: 0; }
+
+  .shot-btn {
     display: block;
+    width: 100%;
+    padding: 0;
+    background: none;
     border: 1px solid var(--border);
     border-radius: 7px;
     overflow: hidden;
     line-height: 0;
+    cursor: zoom-in;
     transition: border-color 0.18s ease;
   }
 
-  .shots a:hover { border-color: var(--accent-dim); }
+  .shot-btn:hover { border-color: var(--accent-dim); }
+
+  .shot-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
 
   .shots img {
     width: 100%;
@@ -190,7 +203,58 @@
     background: var(--bg);
   }
 
-  .shots figure { margin: 0; }
+  /* ---------- Lightbox ---------- */
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    z-index: 100;
+    cursor: zoom-out;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: var(--mono);
+    font-size: 1.7rem;
+    line-height: 1;
+    color: #fff;
+    opacity: 0.6;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: opacity 0.18s ease;
+  }
+
+  .lightbox-close:hover { opacity: 1; }
+
+  .lightbox-hint {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: #fff;
+    opacity: 0.4;
+  }
 
   /* ---------- Links ---------- */
 
@@ -243,6 +307,8 @@
     .project { padding: 20px; }
     .shots { grid-template-columns: 1fr; }
     .shots img { height: 190px; }
+    .lightbox { padding: 56px 12px; }
+    .lightbox-hint { display: none; }
   }
 </style>
 </head>
@@ -270,15 +336,15 @@
 
       <div class="shots">
         <figure>
-          <a href="img/kokbok.png">
+          <button type="button" class="shot-btn" data-full="img/kokbok.png">
             <img src="img/kokbok.png" alt="Kokboksvyn i RecipeHub med sparade recept som kort">
-          </a>
+          </button>
           <figcaption>Kokbok</figcaption>
         </figure>
         <figure>
-          <a href="img/inkopslista.png">
+          <button type="button" class="shot-btn" data-full="img/inkopslista.png">
             <img src="img/inkopslista.png" alt="Inköpslista grupperad efter varukategori">
-          </a>
+          </button>
           <figcaption>Inköpslista</figcaption>
         </figure>
       </div>
@@ -291,7 +357,7 @@
       </p>
 
       <div class="links">
-        <a href="https://github.com/kholterberg/Kokbok">GitHub</a>
+        <a href="https://github.com/kholterberg/Kokbok" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </article>
 
@@ -304,19 +370,60 @@
         allt på väg att bli kod. Jag skriver upp vad som gick fel på vägen.
       </p>
       <div class="links">
-        <a href="https://github.com/kholterberg/homelab">GitHub</a>
-        <a href="https://github.com/kholterberg/homelab/blob/main/docs/01-reverse-proxy-dns01.md">Write-up</a>
+        <a href="https://github.com/kholterberg/homelab" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/kholterberg/homelab/blob/main/docs/01-reverse-proxy-dns01.md" target="_blank" rel="noopener noreferrer">Write-up</a>
       </div>
     </article>
   </section>
 
   <footer>
-    <a href="https://github.com/kholterberg">github.com/kholterberg</a>
-    <a href="https://www.linkedin.com/in/karl-johan-holterberg-264730251/">LinkedIn</a>
+    <a href="https://github.com/kholterberg" target="_blank" rel="noopener noreferrer">github.com/kholterberg</a>
+    <a href="https://www.linkedin.com/in/karl-johan-holterberg-264730251/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     <a href="mailto:holterbergk@gmail.com">holterbergk@gmail.com</a>
   </footer>
 
 </div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Förstorad bild">
+  <button type="button" class="lightbox-close" aria-label="Stäng">&times;</button>
+  <img src="" alt="">
+  <p class="lightbox-hint">Klicka var som helst eller tryck Esc för att stänga</p>
+</div>
+
+<script>
+  (function () {
+    const lb = document.getElementById('lightbox');
+    const lbImg = lb.querySelector('img');
+    const closeBtn = lb.querySelector('.lightbox-close');
+    let lastFocused = null;
+
+    function open(btn) {
+      lastFocused = btn;
+      lbImg.src = btn.dataset.full;
+      lbImg.alt = btn.querySelector('img').alt;
+      lb.classList.add('open');
+      document.body.classList.add('no-scroll');
+      closeBtn.focus();
+    }
+
+    function close() {
+      lb.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+      lbImg.src = '';
+      if (lastFocused) lastFocused.focus();
+    }
+
+    document.querySelectorAll('.shot-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () { open(btn); });
+    });
+
+    lb.addEventListener('click', close);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lb.classList.contains('open')) close();
+    });
+  })();
+</script>
 
 </body>
 </html>
