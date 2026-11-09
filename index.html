@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalle Holterberg</title>
+<meta name="description" content="Datavetenskapsstudent i Karlstad med inriktning mot säkerhet och infrastruktur.">
+<style>
+  :root {
+    --bg: #0f1012;
+    --surface: #16181b;
+    --border: #24272c;
+    --text: #e8e6e3;
+    --muted: #8b9199;
+    --accent: #d98b4a;
+    --accent-dim: #8a5c33;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #faf9f7;
+      --surface: #ffffff;
+      --border: #e2e0dc;
+      --text: #1a1c1e;
+      --muted: #666d75;
+      --accent: #b56a2c;
+      --accent-dim: #d4a176;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* ---------- Header ---------- */
+
+  header {
+    padding: 96px 0 56px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+
+  .tagline {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    margin: 0 0 28px;
+  }
+
+  .intro {
+    color: var(--muted);
+    margin: 0;
+    max-width: 56ch;
+  }
+
+  .intro strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ---------- Sections ---------- */
+
+  section { padding: 56px 0; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---------- Projects ---------- */
+
+  .project {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 26px;
+    margin-bottom: 18px;
+    transition: border-color 0.18s ease;
+  }
+
+  .project:hover { border-color: var(--accent-dim); }
+
+  .project h3 {
+    font-size: 1.15rem;
+    margin: 0 0 6px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .stack {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--muted);
+    margin: 0 0 16px;
+  }
+
+  .project p {
+    margin: 0 0 18px;
+    color: var(--muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .links a {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 11px;
+    transition: border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .links a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0 72px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    align-items: center;
+  }
+
+  footer a {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 480px) {
+    header { padding: 64px 0 40px; }
+    section { padding: 40px 0; }
+    .project { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <h1>Kalle Holterberg</h1>
+    <p class="tagline">Datavetenskap · Karlstads universitet</p>
+    <p class="intro">
+      Tredje året på civilingenjörsprogrammet, med intresse för
+      <strong>säkerhet och infrastruktur</strong>. Det mesta jag kan har jag
+      lärt mig genom att bygga saker och sedan felsöka dem — ofta i min
+      hemmaserver, som numera kör det jag skriver.
+    </p>
+  </header>
+
+  <section>
+    <p class="label">Projekt</p>
+
+    <article class="project">
+      <h3>RecipeHub</h3>
+      <p class="stack">Node.js · Express · SQLite · Docker</p>
+      <p>
+        Receptscraper och digital kokbok som bygger inköpslistor sorterade
+        efter butikens gångordning. Sajtspecifika scrapers för ICA och Coop
+        plus en generell JSON-LD-parser, som alla normaliserar till samma
+        datastruktur. Körs i min homelab bakom reverse proxy.
+      </p>
+      <div class="links">
+        <a href="https://github.com/kholterberg/Kokbok">GitHub</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <h3>Homelab</h3>
+      <p class="stack">Proxmox · Nginx Proxy Manager · Pi-hole · Tailscale</p>
+      <p>
+        En labbmiljö för att lära mig nätverk, drift och säkerhet på riktigt.
+        Wildcard-HTTPS på egen domän utan en enda öppen port, intern DNS och
+        allt på väg att bli kod. Jag skriver upp vad som gick fel på vägen.
+      </p>
+      <div class="links">
+        <a href="https://github.com/kholterberg/homelab">GitHub</a>
+        <a href="https://github.com/kholterberg/homelab/blob/main/docs/01-reverse-proxy-dns01.md">Write-up</a>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <a href="https://github.com/kholterberg">github.com/kholterberg</a>
+    <a href="#">LinkedIn</a>
+    <a href="mailto:holterbergk@gmail.com">holterbergk@gmail.com</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
